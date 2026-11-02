@@ -24,11 +24,27 @@ export function windowTitle(w: UsageWindow, t: T): string {
 
 /** Message for a state; CLI-backed providers get a more specific remedy than the generic one. */
 /** "7,360 of 7,000 credits" and, past the allowance, "Over by 360 credits · extra usage allowed". */
+/** Credits to US dollars, as given by the user: 100 credits = $1. Not a figure the service reports. */
+export const CREDITS_PER_USD = 100
+
+export function creditsToUsd(credits: number): number {
+  return Math.round((credits / CREDITS_PER_USD) * 100) / 100
+}
+
 export function amountLines(w: UsageWindow, t: T, locale: Locale): { amount: string | null; over: string | null } {
   const nf = new Intl.NumberFormat(locale === 'zh-CN' ? 'zh-CN' : 'en-US', { maximumFractionDigits: 1 })
   const unit = w.amounts ? t(`unit.${w.amounts.unit}` as 'unit.credits') : ''
   const amount = w.amounts ? t('card.amount', { used: nf.format(w.amounts.used), limit: nf.format(w.amounts.limit), unit }) : null
-  const over = w.overage && w.overage.over > 0 ? t(w.overage.allowed ? 'card.over' : 'card.overBlocked', { n: nf.format(w.overage.over), unit }) : null
+  let over: string | null = null
+  if (w.overage && w.overage.over > 0) {
+    const n = nf.format(w.overage.over)
+    if (w.overage.allowed && w.amounts?.unit === 'credits') {
+      const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(creditsToUsd(w.overage.over))
+      over = t('card.overUsd', { n, unit, usd })
+    } else {
+      over = t(w.overage.allowed ? 'card.over' : 'card.overBlocked', { n, unit })
+    }
+  }
   return { amount, over }
 }
 

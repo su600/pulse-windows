@@ -16,7 +16,7 @@ Built from the repository's own UI and behaviour docs (`Docs/ui/*`, `Docs/provid
 
 | Area | Status |
 |---|---|
-| **GitHub Copilot** | Device-code sign-in (`read:user` only), the three monthly quotas (Premium requests / Chat / Completions), plan name, overage and unissued-lane rules |
+| **GitHub Copilot** | Device-code sign-in (`read:user` only), the three monthly quotas (Premium requests / Chat / Completions), plan name (Pro vs Pro+ read from `access_type_sku`), credit usage (`7,360 of 7,000 credits`), overage and unissued-lane rules. Overage on credit-billed accounts is also shown in dollars at **100 credits = $1** — that rate is a user-supplied conversion, not something the API reports (it reports credits only) |
 | **Claude Code** | Reads the OAuth login Claude Code stored (`.claude\.credentials.json`), 5-hour / weekly / per-model windows, plan name |
 | **Codex** | Reads `.codex\auth.json`, primary/secondary + per-model windows, plan, credit balance |
 | **DeepSeek** | Prepaid balance via a pasted API key (encrypted with Windows DPAPI) |
