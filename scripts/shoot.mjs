@@ -57,6 +57,7 @@ if (which === 'all' || which === 'panel') {
   await panel('panel-left', 'mock=demo&pos=left', 2)
   await panel('panel-segmented', 'mock=demo&bars=segmented', 2)
   await panel('panel-zh', 'mock=real&lang=zh-CN', 0)
+  await panel('panel-copilot-en-detail', 'mock=real&lang=en&detail=1', 0)
 }
 if (which === 'all' || which === 'settings') {
   await settings('settings-appearance', 'mock=real&lang=en', null)

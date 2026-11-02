@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { EMPTY_MEMORY, evaluateAlerts, FAILURE_STREAK } from '../src/shared/alerts'
 import { computeFrame, metricsFor, railLength, ringCentre } from '../src/shared/layout'
-import { dropExpired, effectiveSnapshot, elapsedFraction, emptySnapshot, headlineWindow, percentOf, tintFor } from '../src/shared/rules'
+import { dropExpired, effectiveSnapshot, elapsedFraction, emptySnapshot, headlineWindow, isSpent, percentOf, tintFor, windowTint } from '../src/shared/rules'
 import { DEFAULT_SETTINGS, type UsageSnapshot, type UsageWindow } from '../src/shared/types'
 
 const NOW = 1_800_000_000_000
@@ -32,6 +32,22 @@ describe('colour', () => {
   it('lets the provider say spent below 100%', () => {
     expect(tintFor(0.4, true, 0.75)).toBe('exhausted')
     expect(tintFor(1, false, 0.75)).toBe('exhausted')
+  })
+})
+
+describe('over the allowance', () => {
+  const over = (allowed: boolean): UsageWindow => win({ usedFraction: 1.05, overage: { over: 360, allowed, limit: null } })
+
+  it('is not "spent" while the service carries on, but is while it blocks', () => {
+    expect(isSpent(over(true))).toBe(false)
+    expect(isSpent(over(false))).toBe(true)
+    expect(isSpent(win({ usedFraction: 1 }))).toBe(true)
+    expect(isSpent(win({ usedFraction: 0.4, isExhausted: true }))).toBe(true)
+  })
+
+  it('stays on the red warning step rather than the deep spent colour', () => {
+    expect(windowTint(over(true), 0.75)).toBe('warning')
+    expect(windowTint(over(false), 0.75)).toBe('exhausted')
   })
 })
 

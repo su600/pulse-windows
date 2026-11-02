@@ -23,6 +23,10 @@ export interface UsageWindow {
   resetsAt: number | null
   /** The provider's own word that the limit is spent (may be < 100%). */
   isExhausted: boolean
+  /** What was used out of what, in the provider's own unit, when it reports counts. */
+  amounts?: { used: number; limit: number; unit: 'credits' | 'requests' } | null
+  /** Use beyond the included allowance. `allowed` means the service keeps working (and bills for it). */
+  overage?: { over: number; allowed: boolean; limit: number | null } | null
 }
 
 /** Why a snapshot has no live figures. A state, not an error string. */

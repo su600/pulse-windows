@@ -51,6 +51,7 @@ describe('GitHub Copilot', () => {
     const r = parseCopilotUsage(fixture('copilot-overage'))
     expect(r.windows![0].usedFraction).toBe(1)
     expect(r.windows![0].isExhausted).toBe(false)
+    expect(r.windows![0].overage).toMatchObject({ allowed: true, over: 37 })
   })
 
   it('handles the older shape without has_quota', () => {
@@ -64,6 +65,27 @@ describe('GitHub Copilot', () => {
     const r = parseCopilotUsage(fixture('copilot-empty'))
     expect(r.availability).toBe('noLimitsReported')
     expect(r.plan).toBeNull()
+  })
+
+  it('recognises Pro+ from the sku (the plan field says individual_pro for both Pro and Pro+)', () => {
+    const r = parseCopilotUsage(fixture('copilot-pro-plus-credits'))
+    expect(r.plan).toBe('Pro+')
+    expect(copilotPlanName('individual_pro', 'monthly_subscriber_quota')).toBe('Pro')
+    expect(copilotPlanName('individual_pro', 'plus_monthly_subscriber_quota')).toBe('Pro+')
+    expect(copilotPlanName(undefined, 'free_limited_copilot')).toBe('Free')
+    expect(copilotPlanName('some_new_plan')).toBe('Some New Plan')
+  })
+
+  it('reads credit billing: used / allowance, how far over, and that extra usage is allowed', () => {
+    const r = parseCopilotUsage(fixture('copilot-pro-plus-credits'))
+    // chat and completions are unlimited: no ring for them
+    expect(r.windows!.map((w) => w.id)).toEqual(['copilot.premium_interactions'])
+    const w = r.windows![0]
+    expect(w.amounts).toEqual({ used: 7360, limit: 7000, unit: 'credits' })
+    expect(w.usedFraction).toBeCloseTo(7360 / 7000)
+    expect(w.overage).toEqual({ over: 360, allowed: true, limit: 2000 })
+    // over the allowance, but the service carries on: not "spent"
+    expect(w.isExhausted).toBe(false)
   })
 
   it('tidies plan names and passes unknown ones through', () => {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { availabilityText, formatClock, formatReset, windowTitle } from '@shared/format'
+import { amountLines, availabilityText, formatClock, formatReset, windowTitle } from '@shared/format'
 import type { T } from '@shared/i18n'
 import type { CopilotStatus, DeepPartial } from '@shared/ipc'
-import { headlineWindow, isSpent, percentOf, tintColor, tintFor } from '@shared/rules'
+import { headlineWindow, isSpent, percentOf, tintColor, windowTint } from '@shared/rules'
 import { accountSettings } from '@shared/settings'
 import { providerInfo, type AppSettings, type ProviderId, type SettingsState } from '@shared/types'
 import { ProviderIcon } from '../shared/Icon'
@@ -102,12 +102,14 @@ export function AccountPane({ s, t, id, patch }: Props) {
               const spent = isSpent(w)
               const used = w.usedFraction ?? 0
               const pct = percentOf(w.usedFraction, false)
-              const color = tintColor(tintFor(used, spent, s.settings.panel.warningThreshold), dark ? false : true)
+              const color = tintColor(windowTint(w, s.settings.panel.warningThreshold), dark ? false : true)
+              const lines = amountLines(w, t, s.locale)
+              const subtitle = [lines.amount, lines.over, w.resetsAt ? t('card.resets', { when: formatReset(w.resetsAt, s.locale) }) : null].filter(Boolean).join(' · ')
               return (
                 <Row
                   key={w.id}
                   title={windowTitle(w, t)}
-                  subtitle={w.resetsAt ? t('card.resets', { when: formatReset(w.resetsAt, s.locale) }) : undefined}
+                  subtitle={subtitle || undefined}
                 >
                   <span className="usage-mini">
                     <span className="usage-bar"><span style={{ width: `${Math.min(used, 1) * 100}%`, background: color }} /></span>

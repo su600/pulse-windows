@@ -208,3 +208,13 @@ body.panel-body {
 .card-foot {
   opacity: 0.4;
 }
+
+.row-amount {
+  opacity: 0.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.row-over {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}

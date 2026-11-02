@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { availabilityText, formatClock, formatReset, formatUpdated, windowTitle } from '@shared/format'
+import { amountLines, availabilityText, formatClock, formatReset, formatUpdated, windowTitle } from '@shared/format'
 import type { Locale } from '@shared/i18n'
 import type { Metrics } from '@shared/layout'
-import { formatCompactMoney, isSpent, percentOf, tintColor, tintFor } from '@shared/rules'
+import { formatCompactMoney, isSpent, percentOf, tintColor, windowTint } from '@shared/rules'
 import { providerInfo, type AppSettings, type RailEntry } from '@shared/types'
 import { ProviderIcon } from '../shared/Icon'
 import { useSpring, useT } from '../shared/hooks'
@@ -67,7 +67,8 @@ export function Card({ entry, settings, m, locale, now, light, detailed, side, a
       id: w.id,
       title: windowTitle(w, t),
       fraction: settings.panel.showsRemaining && !spent ? 1 - Math.min(used, 1) : Math.min(used, 1),
-      color: tintColor(tintFor(used, spent, warn), light),
+      color: tintColor(windowTint(w, warn), light),
+      ...amountLines(w, t, locale),
       spent,
       text: pct === null ? '–' : settings.panel.showsRemaining ? t('card.left', { pct }) : t('card.used', { pct }),
       reset: w.resetsAt ? t('card.resets', { when: formatReset(w.resetsAt, locale) }) : null
@@ -109,6 +110,8 @@ export function Card({ entry, settings, m, locale, now, light, detailed, side, a
                 <span className="row-used" style={{ color: r.spent ? tintColor('exhausted', light) : undefined }}>{r.text}</span>
                 {r.reset && <span className="row-reset">{r.reset}</span>}
               </div>
+              {r.amount && <div className="row-amount">{r.amount}</div>}
+              {r.over && <div className="row-over" style={{ color: tintColor('warning', light) }}>{r.over}</div>}
             </div>
           ))}
           {snapshot.balance && (

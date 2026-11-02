@@ -23,6 +23,15 @@ export function windowTitle(w: UsageWindow, t: T): string {
 }
 
 /** Message for a state; CLI-backed providers get a more specific remedy than the generic one. */
+/** "7,360 of 7,000 credits" and, past the allowance, "Over by 360 credits · extra usage allowed". */
+export function amountLines(w: UsageWindow, t: T, locale: Locale): { amount: string | null; over: string | null } {
+  const nf = new Intl.NumberFormat(locale === 'zh-CN' ? 'zh-CN' : 'en-US', { maximumFractionDigits: 1 })
+  const unit = w.amounts ? t(`unit.${w.amounts.unit}` as 'unit.credits') : ''
+  const amount = w.amounts ? t('card.amount', { used: nf.format(w.amounts.used), limit: nf.format(w.amounts.limit), unit }) : null
+  const over = w.overage && w.overage.over > 0 ? t(w.overage.allowed ? 'card.over' : 'card.overBlocked', { n: nf.format(w.overage.over), unit }) : null
+  return { amount, over }
+}
+
 export function availabilityText(a: Availability, t: T, provider?: { id: ProviderId; name: string; credential: string }): string {
   if (provider?.credential === 'cli') {
     if (a === 'notConnected') return t('av.cliNotFound', { name: provider.name })

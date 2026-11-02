@@ -1,0 +1,24 @@
+{
+  "access_type_sku": "plus_monthly_subscriber_quota",
+  "copilot_plan": "individual_pro",
+  "quota_reset_date": "2026-12-01",
+  "quota_reset_date_utc": "2026-12-01T00:00:00.000Z",
+  "token_based_billing": true,
+  "quota_snapshots": {
+    "chat": {
+      "overage_count": 0, "overage_permitted": false, "percent_remaining": 100, "quota_id": "chat",
+      "quota_remaining": 0, "unlimited": true, "has_quota": true, "quota_reset_at": 0,
+      "token_based_billing": true, "credits_used": 0, "overage_entitlement": 0, "remaining": 0, "entitlement": 0
+    },
+    "completions": {
+      "overage_count": 0, "overage_permitted": false, "percent_remaining": 100, "quota_id": "completions",
+      "quota_remaining": 0, "unlimited": true, "has_quota": true, "quota_reset_at": 0,
+      "token_based_billing": true, "credits_used": 0, "overage_entitlement": 0, "remaining": 0, "entitlement": 0
+    },
+    "premium_interactions": {
+      "overage_count": 176, "overage_permitted": true, "percent_remaining": 0, "quota_id": "premium_interactions",
+      "quota_remaining": -360.1, "unlimited": false, "has_quota": true, "quota_reset_at": 0,
+      "token_based_billing": true, "credits_used": 7360, "overage_entitlement": 2000, "remaining": -361, "entitlement": 7000
+    }
+  }
+}

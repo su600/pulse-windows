@@ -1,5 +1,5 @@
 import { formatCompactMoney } from '@shared/rules'
-import { elapsedFraction, headlineWindow, isSpent, percentOf, tintFor, type Tint } from '@shared/rules'
+import { elapsedFraction, headlineWindow, isSpent, percentOf, windowTint, type Tint } from '@shared/rules'
 import { accountSettings } from '@shared/settings'
 import type { AppSettings, RailEntry, UsageWindow } from '@shared/types'
 
@@ -42,7 +42,7 @@ export function ringView(entry: RailEntry, settings: AppSettings, now: number, l
 
   return {
     headline,
-    tint: tintFor(used ?? 0, spent, settings.panel.warningThreshold),
+    tint: headline ? windowTint(headline, settings.panel.warningThreshold) : 'good',
     customColor: spent ? null : acct.ringTint,
     spent,
     hasReading,
@@ -59,7 +59,7 @@ export function alertTint(entries: RailEntry[], settings: AppSettings): Tint | n
   for (const e of entries) {
     const h = headlineWindow(e.snapshot.windows, accountSettings(settings, e.providerId).pinnedWindow)
     if (!h) continue
-    const tint = tintFor(h.usedFraction ?? 0, isSpent(h), settings.panel.warningThreshold)
+    const tint = windowTint(h, settings.panel.warningThreshold)
     if (tint === 'good' || tint === 'caution') continue
     if (worst === null || order.indexOf(tint) > order.indexOf(worst)) worst = tint
   }

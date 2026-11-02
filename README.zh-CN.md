@@ -10,7 +10,7 @@
 
 Pulse 是一个本地优先的 AI 编程额度监视小工具：屏幕边缘贴着一条细长的黑色竖条，每个服务一个圆环，鼠标移到环上，会弹出一张卡片，列出每条额度和它的重置时间。没有 Pulse 账号，也没有 Pulse 服务器。
 
-<p align="center"><img src="docs/screenshots/panel-copilot.png" height="420" alt="悬停在 GitHub Copilot 的环上，弹出三类额度的详情卡"></p>
+<p align="center"><img src="docs/screenshots/panel-copilot-pro-plus.png" height="420" alt="悬停在 GitHub Copilot 的环上，弹出三类额度的详情卡"></p>
 
 ## 已实现的功能
 

@@ -15,7 +15,7 @@ import {
 import { parseCopilotUsage } from '../../main/providers/copilot'
 import { parseClaudeUsage } from '../../main/providers/claudeCode'
 import { parseDeepSeekBalance } from '../../main/providers/deepseek'
-import copilotFixture from '../../../tests/fixtures/copilot-normal.json'
+import copilotFixture from '../../../tests/fixtures/copilot-pro-plus-credits.json'
 import deepseekFixture from '../../../tests/fixtures/deepseek-balance.json'
 
 /**
@@ -53,6 +53,7 @@ export function installDevMock(): void {
       free: { x: window.innerWidth / 2, y: window.innerHeight / 2 }
     }
   }
+  if (q.get('detail') === '1') settings = { ...settings, accounts: { copilot: { pinnedWindow: null, ringTint: null, detailedCard: true } } }
   const claudeSample = {
     limits: [
       { kind: 'session', percent: 34, resets_at: new Date(now + 2.5 * 3600_000).toISOString() },

@@ -26,9 +26,21 @@ export function tintColor(tint: Tint, light: boolean): string {
 
 // ------------------------------------------------------------------ windows
 
+/**
+ * Spent = the provider says so, or the allowance is used up and the service
+ * will not carry on. A limit with overage allowed keeps working past its
+ * included share, so it is over its allowance but not blocked.
+ */
 export function isSpent(window: UsageWindow | null | undefined): boolean {
   if (!window) return false
-  return window.isExhausted || (window.usedFraction ?? 0) >= 1
+  if (window.isExhausted) return true
+  return (window.usedFraction ?? 0) >= 1 && window.overage?.allowed !== true
+}
+
+/** Colour step for a window: spent is its own state; an over-allowance limit stays on the warning step. */
+export function windowTint(window: UsageWindow, warningAt: number): Tint {
+  if (isSpent(window)) return 'exhausted'
+  return tintFor(Math.min(window.usedFraction ?? 0, 0.999), false, warningAt)
 }
 
 /** A window whose reset time has passed is history, not the current limit. */
