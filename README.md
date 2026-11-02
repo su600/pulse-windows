@@ -4,6 +4,8 @@
 
 A Windows port of [Pulse](https://github.com/qunqin24/Pulse) — a small, local-first floating monitor for AI coding quota. A slim black rail sits on the edge of your screen with one ring per service; point at a ring and a card shows each limit and when it resets. No Pulse account, no Pulse server.
 
+> **How it was made.** This whole project — code, tests and docs — was written with **[Claude Code](https://claude.com/claude-code)** using the **Claude Sonnet 5.5** model, directed by [@su600](https://github.com/su600). Treat it accordingly: the unit tests pass, but not every behaviour has been exercised on real accounts and hardware yet (see *Verification status* below).
+
 Built from the repository's own UI and behaviour docs (`Docs/ui/*`, `Docs/providers/*`) and the Windows design brief, not by compiling the Swift sources (they are AppKit/SwiftUI and cannot run on Windows). Stack: **Electron + React + TypeScript**.
 
 > Not an official integration of any service. The usage endpoints are not public APIs and can change without notice.
