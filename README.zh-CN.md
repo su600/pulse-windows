@@ -39,10 +39,12 @@ npm install
 npm run dev          # 启动 Electron（热更新）
 npm run dev:web      # 在普通浏览器里用模拟后端预览面板/设置（?mock=demo|real|setup）
 npm test             # 53 个单元测试
-npm run dist         # 在 dist/ 生成 NSIS 安装包和便携版 exe
+npm run dist         # 在 dist/ 生成 NSIS 安装包和便携版 exe（约 90–100 MB，未签名）
 ```
 
 `PULSE_DEMO=1` 会用 6 个模拟的环启动程序（独立配置，不联网），适合截图。
+
+**打包成 exe：** 运行 `npm run dist`，在 `dist\` 下得到：`Pulse Setup 0.1.0.exe`（安装程序，可选安装目录，安装到用户目录、不需要管理员权限）和 `Pulse 0.1.0.exe`（便携版，免安装，双击即用）。两者都**没有代码签名**，第一次运行 Windows SmartScreen 可能提示“未知发布者”，点“更多信息 → 仍要运行”即可。同样请不要把它们放在桌面下运行（见上）。
 
 **首次启动**会打开选择窗口：勾选要监控的服务，再点“完成”。Copilot 的用法：打开它的设置页，点“登录…”，验证码会复制到剪贴板，浏览器会打开 GitHub，把验证码粘贴到页面里并点 Authorize。（GitHub 出于安全考虑从不预填验证码。）
 

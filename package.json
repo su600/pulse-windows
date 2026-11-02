@@ -72,7 +72,7 @@
           ]
         }
       ],
-      "icon": "build/icon.png"
+      "icon": "build/icon.ico"
     },
     "nsis": {
       "oneClick": false,
@@ -84,5 +84,6 @@
     "type": "git",
     "url": "https://github.com/su600/pulse-windows.git"
   },
-  "homepage": "https://github.com/su600/pulse-windows"
+  "homepage": "https://github.com/su600/pulse-windows",
+  "author": "su600"
 }

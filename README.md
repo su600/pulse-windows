@@ -39,10 +39,12 @@ npm install
 npm run dev          # Electron, with hot reload
 npm run dev:web      # the panel/settings in a plain browser with a mock backend (?mock=demo|real|setup)
 npm test             # 53 unit tests
-npm run dist         # NSIS installer + portable exe in dist/
+npm run dist         # NSIS installer + portable exe in dist/ (~90-100 MB, unsigned)
 ```
 
 `PULSE_DEMO=1` starts the app with six synthetic rings (separate profile, no network) — handy for screenshots.
+
+**Building an exe:** run `npm run dist`. In `dist\` you get `Pulse Setup 0.1.0.exe` (installer; choose the folder, installs per-user, no admin rights) and `Pulse 0.1.0.exe` (portable, no install). Both are **unsigned**, so Windows SmartScreen may warn about an unknown publisher the first time: choose *More info → Run anyway*. As above, don't run them from under `Desktop`.
 
 First launch opens the chooser. Pick services, then **Done**. For Copilot, open its pane and click **Sign in…**: the code is copied to the clipboard, GitHub opens in your browser, paste the code there. (GitHub never pre-fills it; that is deliberate on their side.)
 
