@@ -1,0 +1,12 @@
+node_modules
+out
+dist
+*.log
+shots
+.claude
+dev-shots
+dev-run.*
+first-run.*
+shortcut.txt
+start-error.txt
+launch-check.txt

@@ -1,0 +1,88 @@
+{
+  "name": "pulse-windows",
+  "productName": "Pulse",
+  "version": "0.1.0",
+  "description": "Unofficial Windows port of qunqin24/Pulse: a local-first floating monitor for AI coding quota (GitHub Copilot first).",
+  "main": "out/main/index.js",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "dist": "electron-vite build && electron-builder --win",
+    "dev:web": "vite --config vite.dev.config.ts",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.0",
+    "electron-vite": "^4.0.0",
+    "playwright-core": "^1.64.1",
+    "typescript": "~5.7.2",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.0"
+  },
+  "build": {
+    "appId": "io.github.pulse.windows",
+    "productName": "Pulse",
+    "copyright": "Copyright (c) 2026 qunqin24 (original Pulse). Windows port licensed under Apache-2.0.",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "out/**/*",
+      "package.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/tray-dark.png",
+        "to": "tray-dark.png"
+      },
+      {
+        "from": "resources/tray-light.png",
+        "to": "tray-light.png"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/su600/pulse-windows.git"
+  },
+  "homepage": "https://github.com/su600/pulse-windows"
+}
