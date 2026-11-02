@@ -1,3 +1,4 @@
+import { formatUsd, overageUsd } from '@shared/format'
 import { formatCompactMoney } from '@shared/rules'
 import { elapsedFraction, headlineWindow, isSpent, percentOf, windowTint, type Tint } from '@shared/rules'
 import { accountSettings } from '@shared/settings'
@@ -14,6 +15,8 @@ export interface RingView {
   arc: number
   /** Text under the ring. */
   label: string
+  /** The label is an extra charge (the allowance is used up and the service bills for going on), not a percentage. */
+  isOverageCost: boolean
   clock: number | null
 }
 
@@ -33,9 +36,12 @@ export function ringView(entry: RailEntry, settings: AppSettings, now: number, l
     arc = spent ? 1 : remaining ? 1 - clamped : clamped
   }
 
+  // Past the allowance with extra usage allowed, what matters is what it costs: that replaces the 100%.
+  const extra = overageUsd(headline)
   let label = '–'
   const pct = percentOf(used, remaining)
-  if (headline && pct !== null) label = `${spent && used === null ? 100 : pct}%`
+  if (extra !== null) label = formatUsd(extra)
+  else if (headline && pct !== null) label = `${spent && used === null ? 100 : pct}%`
   else if (snapshot.balance) {
     label = formatCompactMoney(snapshot.balance.amount, snapshot.balance.currency, locale).replace(/\.00$/, '')
   }
@@ -48,6 +54,7 @@ export function ringView(entry: RailEntry, settings: AppSettings, now: number, l
     hasReading,
     arc,
     label,
+    isOverageCost: extra !== null,
     clock: settings.panel.showWindowClock && headline ? elapsedFraction(headline, now) : null
   }
 }

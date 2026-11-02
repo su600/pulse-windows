@@ -12,6 +12,8 @@ Built from the repository's own UI and behaviour docs (`Docs/ui/*`, `Docs/provid
 
 > Not an official integration of any service. The usage endpoints are not public APIs and can change without notice.
 
+**Download:** ready-made Windows builds are on the [Releases page](https://github.com/su600/pulse-windows/releases) (installer and portable exe, unsigned).
+
 ## What works
 
 | Area | Status |

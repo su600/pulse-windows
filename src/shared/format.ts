@@ -31,6 +31,19 @@ export function creditsToUsd(credits: number): number {
   return Math.round((credits / CREDITS_PER_USD) * 100) / 100
 }
 
+export function formatUsd(amount: number): string {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount)
+}
+
+/**
+ * Extra charge, in dollars, for a limit that is over its credit allowance and is allowed to carry on.
+ * Null when there is nothing to charge (within the allowance, blocked, or counted in requests).
+ */
+export function overageUsd(w: UsageWindow | null | undefined): number | null {
+  if (!w?.overage || !w.overage.allowed || w.overage.over <= 0 || w.amounts?.unit !== 'credits') return null
+  return creditsToUsd(w.overage.over)
+}
+
 export function amountLines(w: UsageWindow, t: T, locale: Locale): { amount: string | null; over: string | null } {
   const nf = new Intl.NumberFormat(locale === 'zh-CN' ? 'zh-CN' : 'en-US', { maximumFractionDigits: 1 })
   const unit = w.amounts ? t(`unit.${w.amounts.unit}` as 'unit.credits') : ''
@@ -39,8 +52,7 @@ export function amountLines(w: UsageWindow, t: T, locale: Locale): { amount: str
   if (w.overage && w.overage.over > 0) {
     const n = nf.format(w.overage.over)
     if (w.overage.allowed && w.amounts?.unit === 'credits') {
-      const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(creditsToUsd(w.overage.over))
-      over = t('card.overUsd', { n, unit, usd })
+      over = t('card.overUsd', { n, unit, usd: formatUsd(creditsToUsd(w.overage.over)) })
     } else {
       over = t(w.overage.allowed ? 'card.over' : 'card.overBlocked', { n, unit })
     }

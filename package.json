@@ -77,7 +77,11 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "perMachine": false
+      "perMachine": false,
+      "artifactName": "Pulse-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "Pulse-${version}-portable.${ext}"
     }
   },
   "repository": {

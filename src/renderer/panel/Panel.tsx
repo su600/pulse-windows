@@ -228,7 +228,7 @@ export function Panel() {
                       fontSize: m.percentFont,
                       width: m.railWidth,
                       left: (m.ringDiameter - m.railWidth) / 2,
-                      color: view.spent ? tintColor('exhausted', light) : undefined,
+                      color: view.spent ? tintColor('exhausted', light) : view.isOverageCost ? tintColor('warning', light) : undefined,
                       opacity: view.hasReading ? 1 : 0.5
                     }}
                   >

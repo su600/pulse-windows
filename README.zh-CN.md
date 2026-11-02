@@ -12,6 +12,8 @@ Pulse 是一个本地优先的 AI 编程额度监视小工具：屏幕边缘贴�
 
 <p align="center"><img src="docs/screenshots/panel-copilot-pro-plus.png" height="420" alt="悬停在 GitHub Copilot 的环上，弹出三类额度的详情卡"></p>
 
+**下载：** 打好包的 Windows 版本在 [Releases 页面](https://github.com/su600/pulse-windows/releases)（安装程序和便携版 exe，未签名）。
+
 ## 已实现的功能
 
 | 方面 | 状态 |
