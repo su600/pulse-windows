@@ -1,5 +1,7 @@
 # Pulse for Windows
 
+<p align="center"><a href="README.zh-CN.md">简体中文</a> · <b>English</b></p>
+
 > **Based on another project.** This is an **unofficial, independent Windows port** of **[Pulse](https://github.com/qunqin24/Pulse) by [qunqin24](https://github.com/qunqin24)** (Apache-2.0), a macOS app. It was built by studying that repository — its UI/behaviour docs (`Docs/ui/*`, `Docs/providers/*`), screenshots, provider response fixtures and the provider icons — and re-implementing it for Windows. The original is Swift/SwiftUI and cannot run on Windows, so the code here is a fresh Electron + React + TypeScript implementation, not a build of the original sources. The design, interaction details and provider-reading rules belong to the original author; I am not affiliated with them. If you like this, please also star the [original Pulse](https://github.com/qunqin24/Pulse). Inspired in turn by a UI concept from [Vinz (@hivinz_)](https://x.com/hivinz_/status/2092996055248126353), as credited by the original project.
 
 A Windows port of [Pulse](https://github.com/qunqin24/Pulse) — a small, local-first floating monitor for AI coding quota. A slim black rail sits on the edge of your screen with one ring per service; point at a ring and a card shows each limit and when it resets. No Pulse account, no Pulse server.
